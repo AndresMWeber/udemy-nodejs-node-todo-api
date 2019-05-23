@@ -6,17 +6,8 @@ const auth = require('../middleware/auth')
 const { sendWelcomeEmail, sendCancelationEmail } = require('../emails/account')
 const router = new express.Router()
 
-router.get('/', async (req, res) => {
-    try {
-        res.status(200).send('Main')
-    } catch (e) {
-        res.status(400).send(e)
-    }
-});
-
 router.post('/users', async (req, res) => {
     const user = new User(req.body)
-
     try {
         await user.save()
         sendWelcomeEmail(user.email, user.name)
